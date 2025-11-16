@@ -1,0 +1,45 @@
+services:
+  php83-yii2025:
+    build:
+      context: ./php83
+      dockerfile: Dockerfile
+    container_name: php83-yii2025
+    environment:
+      TZ: America/Argentina/Buenos_Aires
+    volumes:
+      - ../../:/var/www/html
+      - ./php83/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "8183:80"
+    depends_on:
+      - pg15-yii2025
+    networks:
+      - net183
+
+  pg15-yii2025:
+    container_name: pg15-yii2025
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: pg-yii2025
+      POSTGRES_PASSWORD: pg-yii2025
+      PGDATA: /data
+      POSTGRES_DB: yii2025
+    volumes:
+      - ./data:/data
+    ports:
+      - "5132:5432"
+    networks:
+      - net183
+
+
+
+#-----------------------------------------------------------------------------
+# Redes para cada servicio
+#-----------------------------------------------------------------------------
+networks:
+  net183:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.183.0/24
