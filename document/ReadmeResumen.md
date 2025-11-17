@@ -110,6 +110,7 @@ Este diseño implementa un **patrón Factory** con restricción de instanciació
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
+        }
     }
    ```
 4. Usa `crearInstancia()` con Reflection para instanciar clases con constructor protegido
