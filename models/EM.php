@@ -22,25 +22,6 @@ class EM
     }
 
     /**
-     * Método factory para crear instancias de clases EM*
-     * Este es el único punto autorizado para instanciar clases como EMNotificacion
-     */
-    protected function crearInstancia($clase)
-    {
-        $reflection = new \ReflectionClass($clase);
-        $constructor = $reflection->getConstructor();
-        
-        if ($constructor) {
-            $constructor->setAccessible(true);
-            $instancia = $reflection->newInstanceWithoutConstructor();
-            $constructor->invoke($instancia, $this->em);
-            return $instancia;
-        }
-        
-        return new $clase($this->em);
-    }
-
-    /**
      * Según las características del ExpedienteMovimiento, ejecuta las acciones correspondientes
      */
     public function publicar()
@@ -77,5 +58,24 @@ class EM
         return true;
     }
 
+
+    /**
+     * Método factory para crear instancias de clases EM*
+     * Este es el único punto autorizado para instanciar clases como EMNotificacion
+     */
+    protected function crearInstancia($clase)
+    {
+        $reflection = new \ReflectionClass($clase);
+        $constructor = $reflection->getConstructor();
+        
+        if ($constructor) {
+            $constructor->setAccessible(true);
+            $instancia = $reflection->newInstanceWithoutConstructor();
+            $constructor->invoke($instancia, $this->em);
+            return $instancia;
+        }
+        
+        return new $clase($this->em);
+    }
 
 }
