@@ -4,6 +4,10 @@ namespace app\models;
 
 class EMNotificacion extends EM implements EMInterface
 {
+    const TIPOS_MOVIMIENTO = [
+        TipoMovimiento::TIPO_NOTIFICACION,
+    ];
+
     /**
      * Constructor protegido para evitar instanciación directa.
      * Solo puede ser instanciado desde la clase EM.
@@ -13,13 +17,18 @@ class EMNotificacion extends EM implements EMInterface
         parent::__construct($em);
     }
 
-    public function cumpleCondiciones()
+    public function cumpleCondiciones(): bool
     {
-        return $this->em->id_tipo_movimiento === TipoMovimiento::TIPO_NOTIFICACION;
+        return true;
     }
 
-    public function ejecutarAccion()
+    public function ejecutarAccion(): string
     {
         return ("Notificación");
+    }
+
+    public function getTipoMovimiento(): array
+    {
+        return self::TIPOS_MOVIMIENTO;
     }
 }

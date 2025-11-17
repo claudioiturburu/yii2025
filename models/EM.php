@@ -48,13 +48,13 @@ class EM
         $transaction = \Yii::$app->db->beginTransaction();
         try {
             $respuesta = [];
+            $respuesta[] = '- ' . $this->_defaultAction();
             foreach ($this->_data as $clase) {
                 $instancia = $this->crearInstancia($clase);
-                if ($instancia->cumpleCondiciones()) {
+                if ($instancia->_esTipo($instancia->getTipoMovimiento()) && $instancia->cumpleCondiciones()) {
                     $respuesta[] = '- ' . $instancia->ejecutarAccion();
                 }
             }
-            $respuesta[] = '- Todas.';
             $transaction->commit();
             return implode("<br>", $respuesta);
         } catch (\Exception $e) {
@@ -62,5 +62,20 @@ class EM
             throw $e;
         }
     }
+
+
+    private function _defaultAction()
+    {
+        return 'Acción por defecto';
+    }
+
+    private function _esTipo($tipos)
+    {
+        if (!empty($tipos)) {
+            return in_array($this->em->id_tipo_movimiento, $tipos);
+        }
+        return true;
+    }
+
 
 }

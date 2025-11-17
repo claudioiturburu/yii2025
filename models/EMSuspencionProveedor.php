@@ -4,6 +4,11 @@ namespace app\models;
 
 class EMSuspencionProveedor extends EM implements EMInterface
 {
+
+    const TIPOS_MOVIMIENTO = [
+        TipoMovimiento::TIPO_DISPOSICION_AG,
+    ];
+
     /**
      * Constructor protegido para evitar instanciación directa.
      * Solo puede ser instanciado desde la clase EM.
@@ -13,13 +18,18 @@ class EMSuspencionProveedor extends EM implements EMInterface
         parent::__construct($em);
     }
 
-    public function cumpleCondiciones()
+    public function cumpleCondiciones(): bool
     {
-        return $this->em->json_data['SuspencionProveedor'] ?? false;
+        return !empty($this->em->json_data['SuspencionProveedor']);
     }
 
-    public function ejecutarAccion()
+    public function ejecutarAccion(): string
     {
         return ("Suspención Proveedor");
+    }
+
+    public function getTipoMovimiento(): array
+    {
+        return self::TIPOS_MOVIMIENTO;
     }
 }

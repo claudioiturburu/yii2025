@@ -4,6 +4,7 @@ namespace app\models;
 
 interface EMInterface
 {
-    public function cumpleCondiciones();
-    public function ejecutarAccion();
+    public function getTipoMovimiento(): array;
+    public function cumpleCondiciones(): bool;
+    public function ejecutarAccion(): string;
 }

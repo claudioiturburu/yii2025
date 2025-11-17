@@ -10,11 +10,11 @@ services:
       - ../../:/var/www/html
       - ./php83/php.ini:/usr/local/etc/php/php.ini
     ports:
-      - "8183:80"
+      - "8013:80"
     depends_on:
       - pg15-yii2025
     networks:
-      - net183
+      - net8013
 
   pg15-yii2025:
     container_name: pg15-yii2025
@@ -29,7 +29,7 @@ services:
     ports:
       - "5132:5432"
     networks:
-      - net183
+      - net8013
 
 
 
@@ -37,9 +37,9 @@ services:
 # Redes para cada servicio
 #-----------------------------------------------------------------------------
 networks:
-  net183:
+  net8013:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 192.168.183.0/24
+        - subnet: 192.168.113.0/24

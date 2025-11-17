@@ -95,13 +95,22 @@ Este diseño implementa un **patrón Factory** con restricción de instanciació
    ];
 
    public function publicar() {
-       foreach ($this->_data as $clase) {
-           $instancia = $this->crearInstancia($clase);
-           if ($instancia->cumpleCondiciones()) {
-               $instancia->ejecutarAccion();
-           }
-       }
-   }
+        $transaction = \Yii::$app->db->beginTransaction();
+        try {
+            $respuesta = [];
+            $respuesta[] = '- ' . $this->_defaultAction();
+            foreach ($this->_data as $clase) {
+                $instancia = $this->crearInstancia($clase);
+                if ($instancia->_esTipo($instancia->getTipoMovimiento()) && $instancia->cumpleCondiciones()) {
+                    $respuesta[] = '- ' . $instancia->ejecutarAccion();
+                }
+            }
+            $transaction->commit();
+            return implode("<br>", $respuesta);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+    }
    ```
 4. Usa `crearInstancia()` con Reflection para instanciar clases con constructor protegido
 5. Verifica `cumpleCondiciones()` para cada acción

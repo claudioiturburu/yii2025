@@ -13,13 +13,18 @@ class EMProtocolo extends EM implements EMInterface
         parent::__construct($em);
     }
 
-    public function cumpleCondiciones()
+    public function cumpleCondiciones(): bool
     {
         return $this->em->tipoMovimiento->protocoliza;
     }
 
-    public function ejecutarAccion()
+    public function ejecutarAccion(): string
     {
         return ("Protocolo");
+    }
+
+    public function getTipoMovimiento(): array
+    {
+        return [];
     }
 }

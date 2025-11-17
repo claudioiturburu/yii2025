@@ -13,13 +13,18 @@ class EMDigesto extends EM implements EMInterface
         parent::__construct($em);
     }
 
-    public function cumpleCondiciones()
+    public function cumpleCondiciones(): bool
     {
         return $this->em->para_digesto;
     }
 
-    public function ejecutarAccion()
+    public function ejecutarAccion(): string
     {
         return ("Digesto");
+    }
+
+    public function getTipoMovimiento(): array
+    {
+        return [];
     }
 }
